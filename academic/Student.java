@@ -7,6 +7,14 @@ public class Student {
     int Year;
     int ClassId;
 
+    public Student(int studentId, String studentName, String gender, int year, int classId) {
+        StudentId = studentId;
+        StudentName = studentName;
+        Gender = gender;
+        Year = year;
+        ClassId = classId;
+    }
+
     public void StudentDetails() {
         System.out.println(toString());
     }
