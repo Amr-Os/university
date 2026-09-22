@@ -1,8 +1,7 @@
 package core;
-
+import java.time.DayOfWeek;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.ArrayList;
-import java.util.List;
 
 import academic.Department;
 
@@ -19,7 +18,16 @@ public class CollegeManagement {
     }
 
     public void Open() {
-
+        LocalDateTime now = LocalDateTime.now();
+        DayOfWeek day = now.getDayOfWeek();
+        int hour = now.getHour();
+        boolean workingDay = day != DayOfWeek.FRIDAY && day != DayOfWeek.SATURDAY;
+        boolean workingHour = hour >= 8 && hour < 16;
+        if (workingDay && workingHour) {
+            System.out.println(CollegeName + " is currently open.");
+        } else {
+            System.out.println(CollegeName + " is currently closed.");
+        }
     }
 
     public void addDepartment(int depid, String depName, String hodName) {

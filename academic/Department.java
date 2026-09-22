@@ -1,11 +1,15 @@
 package academic;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Department {
     private int DepartmentId;
     private String DepartmentName;
     private String HODName;
     public static int TotalStaffs;
     public static int TotalStudents;
+    private List<String> EventsList = new ArrayList<>();
 
     public Department(int departmentId, String departmentName, String hODName) {
         DepartmentId = departmentId;
@@ -25,6 +29,17 @@ public class Department {
     }
 
     public void ShowEvents() {
+        if (EventsList.isEmpty()) {
+            System.out.println("No events in " + DepartmentName + ".");
+        } else {
+            for (String event : EventsList) {
+                System.out.println(event);
+            }
+        }
+    }
+
+    public void addEvent(String event) {
+        EventsList.add(event);
     }
 
     public int getDepartmentId() {
