@@ -1,1 +1,27 @@
-{"students": {"1": {"checked": [], "name": "الطالب الأول", "updatedAt": null}, "2": {"checked": [], "name": "الطالب الثاني", "updatedAt": null}, "3": {"checked": [], "name": "الطالب الثالث", "updatedAt": null}}, "updatedAt": null}
+{
+  "updatedAt": "2026-09-22T17:25:10.878Z",
+  "students": {
+    "1": {
+      "name": "الطالب الأول",
+      "updatedAt": "2026-09-22T17:25:10.878Z",
+      "checked": [
+        "s1-t0",
+        "s1-t1",
+        "s1-t2",
+        "s1-t3",
+        "s1-t4",
+        "s1-t5"
+      ]
+    },
+    "2": {
+      "name": "الطالب الثاني",
+      "updatedAt": "2026-09-22T17:25:10.879Z",
+      "checked": []
+    },
+    "3": {
+      "name": "الطالب الثالث",
+      "updatedAt": "2026-09-22T17:25:10.879Z",
+      "checked": []
+    }
+  }
+}
