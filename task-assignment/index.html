@@ -722,6 +722,11 @@
     .sync b { color: #e7e5e4; }
     .sync code { direction: ltr; display: inline-block; font-family: ui-monospace, Consolas, monospace; background: #1c1917; border: 1px solid #57534e; border-radius: 8px; padding: 1px 8px; font-size: 12.5px; color: #d6d3d1; }
     #syncStatus { margin-top: 12px; font-size: 13px; color: #a8a29e; background: #1c1917; border: 1px solid #44403c; border-radius: 12px; padding: 10px 14px; }
+    /* ===== Per-class attribute/method breakdown ===== */
+    .cls-role { font-size: 11px; font-weight: 700; color: #a8a29e; background: #1c1917; border: 1px solid #44403c; border-radius: 100px; padding: 1px 10px; white-space: nowrap; }
+    .attrs, .methods { margin-top: 6px; font-size: 12.5px; line-height: 2.1; }
+    .lbl { font-weight: 800; color: #2dd4bf; font-size: 12px; margin-left: 4px; white-space: nowrap; }
+    .inherit { color: #a8a29e; font-size: 12.5px; }
   </style>
 </head>
 
@@ -786,17 +791,36 @@
           <div class="ptxt" id="t1">التقدم: 0%</div>
         </div>
         <div class="card-body">
-          <div class="sec-title"><i class="fa-solid fa-cube"></i> الكلاسات المسؤول عنها (6)</div>
-          <div class="task" data-k="collegemanagement college department student ug pg open"><input type="checkbox">
-            <div class="t"><b><span class="code">CollegeManagement</span> + <span
-                  class="code">Department</span></b><small>الصفات: CollegeName, City, ContactNumber / DepartmentId,
-                DepartmentName, HODName, TotalStaffs, TotalStudents — الدوال: Open(), CollegeDetails(),
-                DepartmentDetails(), ShowEvents()</small></div>
+          <div class="sec-title"><i class="fa-solid fa-cube"></i> الكلاسات المسؤول عنها (5 كلاسات — كل واحد بمربعه الخاص)</div>
+          <div class="task" data-k="collegemanagement college open"><input type="checkbox">
+            <div class="t"><b><span class="code">CollegeManagement</span> <span class="cls-role">الكلاس الرئيسي للنظام</span></b>
+              <div class="attrs"><span class="lbl">الصفات ⬅</span> <span class="code">CollegeName</span> <span class="code">City</span> <span class="code">ContactNumber</span></div>
+              <div class="methods"><span class="lbl">الدوال ⬅</span> <span class="code">Open()</span> <span class="code">CollegeDetails()</span></div>
+            </div>
           </div>
-          <div class="task" data-k="student ugstudent pgstudent"><input type="checkbox">
-            <div class="t"><b><span class="code">Student</span> (أب) + <span class="code">UGStudent</span> + <span
-                  class="code">PGStudent</span> (أبناء)</b><small>الصفات: StudentId, StudentName, Gender, Year, ClassId
-                — الدوال: StudentDetails(), PayFees(), IsPresent()</small></div>
+          <div class="task" data-k="department"><input type="checkbox">
+            <div class="t"><b><span class="code">Department</span> <span class="cls-role">كلاس مستقل — تكوين مع College</span></b>
+              <div class="attrs"><span class="lbl">الصفات ⬅</span> <span class="code">DepartmentId</span> <span class="code">DepartmentName</span> <span class="code">HODName</span> <span class="code">TotalStaffs</span> <span class="code">TotalStudents</span></div>
+              <div class="methods"><span class="lbl">الدوال ⬅</span> <span class="code">DepartmentDetails()</span> <span class="code">ShowEvents()</span></div>
+            </div>
+          </div>
+          <div class="task" data-k="student parent base"><input type="checkbox">
+            <div class="t"><b><span class="code">Student</span> <span class="cls-role">كلاس أب (Parent)</span></b>
+              <div class="attrs"><span class="lbl">الصفات ⬅</span> <span class="code">StudentId</span> <span class="code">StudentName</span> <span class="code">Gender</span> <span class="code">Year</span> <span class="code">ClassId</span></div>
+              <div class="methods"><span class="lbl">الدوال ⬅</span> <span class="code">StudentDetails()</span> <span class="code">PayFees()</span> <span class="code">IsPresent()</span></div>
+            </div>
+          </div>
+          <div class="task" data-k="ugstudent child"><input type="checkbox">
+            <div class="t"><b><span class="code">UGStudent</span> <span class="cls-role">كلاس ابن ← Student</span></b>
+              <div class="attrs"><span class="lbl">الصفات ⬅</span> <span class="inherit">لا صفات جديدة في الملف — يرث: StudentId, StudentName, Gender, Year, ClassId</span></div>
+              <div class="methods"><span class="lbl">الدوال ⬅</span> <span class="inherit">يرث: StudentDetails(), PayFees(), IsPresent()</span></div>
+            </div>
+          </div>
+          <div class="task" data-k="pgstudent child"><input type="checkbox">
+            <div class="t"><b><span class="code">PGStudent</span> <span class="cls-role">كلاس ابن ← Student</span></b>
+              <div class="attrs"><span class="lbl">الصفات ⬅</span> <span class="inherit">لا صفات جديدة في الملف — يرث: StudentId, StudentName, Gender, Year, ClassId</span></div>
+              <div class="methods"><span class="lbl">الدوال ⬅</span> <span class="inherit">يرث: StudentDetails(), PayFees(), IsPresent()</span></div>
+            </div>
           </div>
           <div class="task" data-k="setup main package"><input type="checkbox">
             <div class="t"><b>🛠️ إعداد المشروع + <span class="code">Main</span></b><small>إنشاء Java Project، التقسيم
@@ -835,24 +859,42 @@
           <div class="ptxt" id="t2">التقدم: 0%</div>
         </div>
         <div class="card-body">
-          <div class="sec-title"><i class="fa-solid fa-cube"></i> الكلاسات المسؤول عنها (5)</div>
-          <div class="task" data-k="staff teaching nonteaching"><input type="checkbox">
-            <div class="t"><b><span class="code">Staff</span> + <span class="code">TeachingStaff</span> + <span
-                  class="code">NonTeachingStaff</span></b><small>الصفات: StaffId, StaffName, DepartmentId, Salary —
-                الدالة: StaffDetails()</small></div>
+          <div class="sec-title"><i class="fa-solid fa-cube"></i> الكلاسات المسؤول عنها (6 كلاسات — كل واحد بمربعه الخاص)</div>
+          <div class="task" data-k="staff parent base"><input type="checkbox">
+            <div class="t"><b><span class="code">Staff</span> <span class="cls-role">كلاس أب (Parent)</span></b>
+              <div class="attrs"><span class="lbl">الصفات ⬅</span> <span class="code">StaffId</span> <span class="code">StaffName</span> <span class="code">DepartmentId</span> <span class="code">Salary</span></div>
+              <div class="methods"><span class="lbl">الدوال ⬅</span> <span class="code">StaffDetails()</span></div>
+            </div>
+          </div>
+          <div class="task" data-k="teachingstaff child"><input type="checkbox">
+            <div class="t"><b><span class="code">TeachingStaff</span> <span class="cls-role">كلاس ابن ← Staff</span></b>
+              <div class="attrs"><span class="lbl">الصفات ⬅</span> <span class="inherit">لا صفات جديدة في الملف — يرث: StaffId, StaffName, DepartmentId, Salary</span></div>
+              <div class="methods"><span class="lbl">الدوال ⬅</span> <span class="inherit">يرث: StaffDetails()</span></div>
+            </div>
+          </div>
+          <div class="task" data-k="nonteachingstaff child"><input type="checkbox">
+            <div class="t"><b><span class="code">NonTeachingStaff</span> <span class="cls-role">كلاس ابن ← Staff</span></b>
+              <div class="attrs"><span class="lbl">الصفات ⬅</span> <span class="inherit">لا صفات جديدة في الملف — يرث: StaffId, StaffName, DepartmentId, Salary</span></div>
+              <div class="methods"><span class="lbl">الدوال ⬅</span> <span class="inherit">يرث: StaffDetails()</span></div>
+            </div>
           </div>
           <div class="task" data-k="classroom"><input type="checkbox">
-            <div class="t"><b><span class="code">Classroom</span></b><small>ClassId, Section, DepartmentId — الدوال:
-                ClassroomDetails(), IsOccupied()</small></div>
+            <div class="t"><b><span class="code">Classroom</span> <span class="cls-role">كلاس مستقل</span></b>
+              <div class="attrs"><span class="lbl">الصفات ⬅</span> <span class="code">ClassId</span> <span class="code">Section</span> <span class="code">DepartmentId</span></div>
+              <div class="methods"><span class="lbl">الدوال ⬅</span> <span class="code">ClassroomDetails()</span> <span class="code">IsOccupied()</span></div>
+            </div>
           </div>
           <div class="task" data-k="library search lend return fine"><input type="checkbox">
-            <div class="t"><b><span class="code">Library</span></b><small>LibraryId, LibrarianName, BookSection,
-                TotalBooks — الدوال: LibraryDetails(), SearchBooks(), LendBooks(), ReturnBooks(), PayFine()</small>
+            <div class="t"><b><span class="code">Library</span> <span class="cls-role">كلاس مستقل</span></b>
+              <div class="attrs"><span class="lbl">الصفات ⬅</span> <span class="code">LibraryId</span> <span class="code">LibrarianName</span> <span class="code">BookSection</span> <span class="code">TotalBooks</span></div>
+              <div class="methods"><span class="lbl">الدوال ⬅</span> <span class="code">LibraryDetails()</span> <span class="code">SearchBooks()</span> <span class="code">LendBooks()</span> <span class="code">ReturnBooks()</span> <span class="code">PayFine()</span></div>
             </div>
           </div>
           <div class="task" data-k="auditorium bookevents"><input type="checkbox">
-            <div class="t"><b><span class="code">Auditorium</span></b><small>AuditoriumName, EventsList, Date, Time,
-                TotalSeats, DepartmentId — الدالة: BookEvents()</small></div>
+            <div class="t"><b><span class="code">Auditorium</span> <span class="cls-role">كلاس مستقل</span></b>
+              <div class="attrs"><span class="lbl">الصفات ⬅</span> <span class="code">AuditoriumName</span> <span class="code">EventsList</span> <span class="code">Date</span> <span class="code">Time</span> <span class="code">TotalSeats</span> <span class="code">DepartmentId</span></div>
+              <div class="methods"><span class="lbl">الدوال ⬅</span> <span class="code">BookEvents()</span></div>
+            </div>
           </div>
 
           <div class="sec-title"><i class="fa-solid fa-link"></i> اعتماديات — انتبه! 🔴</div>
@@ -869,8 +911,7 @@
                 NonTeaching) — ارتباط: Student — Staff — أحادي: Student → Classroom/Library/Auditorium + Teachers →
                 Library</small></div>
           </div>
-          <div class="meta"><span class="tag">📦 Staff.java, Classroom.java, Library.java, Auditorium.java +
-              الورثة</span></div>
+          <div class="meta"><span class="tag">📦 Staff.java, TeachingStaff.java, NonTeachingStaff.java, Classroom.java, Library.java, Auditorium.java</span></div>
         </div>
       </div>
 
@@ -887,23 +928,42 @@
           <div class="ptxt" id="t3">التقدم: 0%</div>
         </div>
         <div class="card-body">
-          <div class="sec-title"><i class="fa-solid fa-cube"></i> الكلاسات المسؤول عنها (5)</div>
+          <div class="sec-title"><i class="fa-solid fa-cube"></i> الكلاسات المسؤول عنها (6 كلاسات — كل واحد بمربعه الخاص)</div>
           <div class="task" data-k="canteen cafeteria showitems buy"><input type="checkbox">
-            <div class="t"><b><span class="code">Cafeteria / Canteen</span></b><small>InchargeId, ItemsList,
-                AvailableList — الدوال: ShowItems(), Buy()</small></div>
+            <div class="t"><b><span class="code">Cafeteria / Canteen</span> <span class="cls-role">كلاس مستقل</span></b>
+              <div class="attrs"><span class="lbl">الصفات ⬅</span> <span class="code">InchargeId</span> <span class="code">ItemsList</span> <span class="code">AvailableList</span></div>
+              <div class="methods"><span class="lbl">الدوال ⬅</span> <span class="code">ShowItems()</span> <span class="code">Buy()</span></div>
+            </div>
           </div>
           <div class="task" data-k="bus driver seats"><input type="checkbox">
-            <div class="t"><b><span class="code">Bus</span></b><small>BusId, BusNumber, DriverName, Destination,
-                TotalSeats — الدوال: BusDetails(), SeatsAvailability()</small></div>
+            <div class="t"><b><span class="code">Bus</span> <span class="cls-role">كلاس مستقل</span></b>
+              <div class="attrs"><span class="lbl">الصفات ⬅</span> <span class="code">BusId</span> <span class="code">BusNumber</span> <span class="code">DriverName</span> <span class="code">Destination</span> <span class="code">TotalSeats</span></div>
+              <div class="methods"><span class="lbl">الدوال ⬅</span> <span class="code">BusDetails()</span> <span class="code">SeatsAvailability()</span></div>
+            </div>
           </div>
-          <div class="task" data-k="hostel boys girls checkin checkout"><input type="checkbox">
-            <div class="t"><b><span class="code">Hostel</span> + <span class="code">BoysHostel</span> + <span
-                  class="code">GirlsHostel</span></b><small>StudentId, BlockNumber, RoomNumber — الدوال:
-                HostelDetails(), CheckIn(), CheckOut()</small></div>
+          <div class="task" data-k="hostel parent base checkin checkout"><input type="checkbox">
+            <div class="t"><b><span class="code">Hostel</span> <span class="cls-role">كلاس أب (Parent)</span></b>
+              <div class="attrs"><span class="lbl">الصفات ⬅</span> <span class="code">StudentId</span> <span class="code">BlockNumber</span> <span class="code">RoomNumber</span></div>
+              <div class="methods"><span class="lbl">الدوال ⬅</span> <span class="code">HostelDetails()</span> <span class="code">CheckIn()</span> <span class="code">CheckOut()</span></div>
+            </div>
+          </div>
+          <div class="task" data-k="boyshostel child"><input type="checkbox">
+            <div class="t"><b><span class="code">BoysHostel</span> <span class="cls-role">كلاس ابن ← Hostel</span></b>
+              <div class="attrs"><span class="lbl">الصفات ⬅</span> <span class="inherit">لا صفات جديدة في الملف — يرث: StudentId, BlockNumber, RoomNumber</span></div>
+              <div class="methods"><span class="lbl">الدوال ⬅</span> <span class="inherit">يرث: HostelDetails(), CheckIn(), CheckOut()</span></div>
+            </div>
+          </div>
+          <div class="task" data-k="girlshostel child"><input type="checkbox">
+            <div class="t"><b><span class="code">GirlsHostel</span> <span class="cls-role">كلاس ابن ← Hostel</span></b>
+              <div class="attrs"><span class="lbl">الصفات ⬅</span> <span class="inherit">لا صفات جديدة في الملف — يرث: StudentId, BlockNumber, RoomNumber</span></div>
+              <div class="methods"><span class="lbl">الدوال ⬅</span> <span class="inherit">يرث: HostelDetails(), CheckIn(), CheckOut()</span></div>
+            </div>
           </div>
           <div class="task" data-k="parking parkvehicle"><input type="checkbox">
-            <div class="t"><b><span class="code">Parking</span></b><small>SlotId, VehicleNumber, VehicleOwnerName —
-                الدالة: ParkVehicle()</small></div>
+            <div class="t"><b><span class="code">Parking</span> <span class="cls-role">كلاس مستقل</span></b>
+              <div class="attrs"><span class="lbl">الصفات ⬅</span> <span class="code">SlotId</span> <span class="code">VehicleNumber</span> <span class="code">VehicleOwnerName</span></div>
+              <div class="methods"><span class="lbl">الدوال ⬅</span> <span class="code">ParkVehicle()</span></div>
+            </div>
           </div>
 
           <div class="sec-title"><i class="fa-solid fa-link"></i> اعتماديات — انتبه! 🔴🔴</div>
@@ -921,7 +981,7 @@
                 لصفحة الملف، كتابة Main شامل يجرّب كل الدوال، وتجهيز العرض النهائي — <b style="color:#2dd4bf">لا تبدأ
                   إلا بعد انتهاء الطالب 1 و 2</b></small></div>
           </div>
-          <div class="meta"><span class="tag">📦 Bus.java, Hostel.java, Parking.java, Canteen.java</span><span
+          <div class="meta"><span class="tag">📦 Canteen.java, Bus.java, Hostel.java, BoysHostel.java, GirlsHostel.java, Parking.java</span><span
               class="tag">📊 UML + Demo</span></div>
         </div>
       </div>
@@ -1044,6 +1104,7 @@
       [1, 2, 3].forEach(i => { const card = document.getElementById('c' + i); const boxes = card.querySelectorAll('input[type=checkbox]'); const done = [...boxes].filter(b => b.checked).length; const pct = boxes.length ? Math.round(done / boxes.length * 100) : 0; document.getElementById('p' + i).style.width = pct + '%'; document.getElementById('t' + i).textContent = `التقدم: ${pct}% (${done}/${boxes.length})`; localStorage.setItem('p' + i + '_' + boxes.length, done) });
       const all = $$('#grid input[type=checkbox]'); const d = [...all].filter(b => b.checked).length; document.title = `(${Math.round(d / all.length * 100)}%) توزيع مهام OOP`;
     }
+    if (localStorage.getItem('taskVer') !== 'v3') { Object.keys(localStorage).filter(k => /^chk\d+$/.test(k)).forEach(k => localStorage.removeItem(k)); localStorage.setItem('taskVer', 'v3'); }
     $$('#grid input[type=checkbox]').forEach((b, idx) => { b.checked = localStorage.getItem('chk' + idx) === '1'; b.addEventListener('change', () => { localStorage.setItem('chk' + idx, b.checked ? '1' : '0'); b.closest('.task').classList.toggle('done', b.checked); updateProgress() }); b.closest('.task').classList.toggle('done', b.checked) });
     updateProgress();
     document.getElementById('btnReset').onclick = () => { if (confirm('تصفير كل التقدم والأسماء؟')) { localStorage.clear(); location.reload() } };
