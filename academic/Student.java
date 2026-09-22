@@ -28,6 +28,14 @@ public class Student {
                 "\nClassId: " + ClassId;
     }
 
+    public void PayFees() {
+
+    }
+
+    public void IsPresent() {
+
+    }
+
     public int getStudentId() {
         return StudentId;
     }
