@@ -1,0 +1,1176 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>توزيع مهام مشروع OOP | نظام إدارة الكلية</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Tajawal:wght@400;500;700;800&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <style>
+    :root {
+      --bg: #0f172a;
+      --bg2: #1e293b;
+      --card: rgba(255, 255, 255, .06);
+      --border: rgba(255, 255, 255, .12);
+      --text: #f1f5f9;
+      --muted: #94a3b8;
+      --p1: #6366f1;
+      --p2: #06b6d4;
+      --p3: #f59e0b;
+      --g1: #8b5cf6;
+      --g2: #ec4899;
+      --g3: #10b981;
+      --dep: #ef4444;
+      --dep-bg: rgba(239, 68, 68, .15);
+      --radius: 20px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0
+    }
+
+    body {
+      font-family: 'Cairo', 'Tajawal', system-ui, sans-serif;
+      background: radial-gradient(1200px 600px at 80% -10%, #4c1d95 0%, transparent 60%), radial-gradient(900px 500px at 10% 10%, #0e7490 0%, transparent 55%), radial-gradient(800px 500px at 50% 100%, #9a3412 0%, transparent 60%), var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.8
+    }
+
+    a {
+      color: inherit
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: auto;
+      padding: 24px
+    }
+
+    /* header */
+    .hero {
+      position: relative;
+      border: 1px solid var(--border);
+      border-radius: 28px;
+      padding: 48px 32px;
+      text-align: center;
+      overflow: hidden;
+      background: linear-gradient(180deg, rgba(255, 255, 255, .08), rgba(255, 255, 255, .02));
+      backdrop-filter: blur(16px);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, .35)
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: -2px;
+      background: conic-gradient(from 180deg, #6366f1, #06b6d4, #10b981, #f59e0b, #ec4899, #6366f1);
+      filter: blur(60px);
+      opacity: .25;
+      z-index: -1
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(99, 102, 241, .18);
+      border: 1px solid rgba(99, 102, 241, .4);
+      padding: 6px 16px;
+      border-radius: 100px;
+      font-size: 14px;
+      font-weight: 700;
+      color: #c7d2fe
+    }
+
+    .hero h1 {
+      font-size: clamp(28px, 5vw, 52px);
+      font-weight: 900;
+      margin: 16px 0 8px
+    }
+
+    .hero h1 span {
+      background: linear-gradient(90deg, #a5b4fc, #67e8f9, #6ee7b7, #fcd34d);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent
+    }
+
+    .hero p {
+      color: var(--muted);
+      max-width: 760px;
+      margin: 0 auto;
+      font-size: 17px
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 14px;
+      margin-top: 28px
+    }
+
+    .stat {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 16px
+    }
+
+    .stat b {
+      font-size: 28px;
+      display: block
+    }
+
+    .stat span {
+      font-size: 13px;
+      color: var(--muted)
+    }
+
+    /* toolbar */
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin: 22px 0;
+      align-items: center;
+      justify-content: space-between
+    }
+
+    .search {
+      flex: 1;
+      min-width: 240px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(255, 255, 255, .06);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 10px 16px
+    }
+
+    .search input {
+      background: transparent;
+      border: 0;
+      outline: 0;
+      color: var(--text);
+      width: 100%;
+      font-family: inherit;
+      font-size: 15px
+    }
+
+    .btns {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap
+    }
+
+    button {
+      font-family: inherit;
+      cursor: pointer;
+      border: 1px solid var(--border);
+      background: rgba(255, 255, 255, .07);
+      color: var(--text);
+      padding: 10px 18px;
+      border-radius: 12px;
+      font-weight: 700;
+      transition: .2s
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      background: rgba(255, 255, 255, .12)
+    }
+
+    button.active {
+      background: linear-gradient(90deg, var(--p1), var(--p2));
+      border-color: transparent
+    }
+
+    button.warn.active {
+      background: linear-gradient(90deg, #ef4444, #f59e0b)
+    }
+
+    /* legend */
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 18px;
+      font-size: 13px;
+      color: var(--muted)
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 12px;
+      border-radius: 100px;
+      border: 1px solid var(--border);
+      background: rgba(255, 255, 255, .05)
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%
+    }
+
+    .dep-pill {
+      background: var(--dep-bg);
+      border: 1px solid rgba(239, 68, 68, .5);
+      color: #fecaca;
+      font-weight: 700
+    }
+
+    /* grid */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 20px
+    }
+
+    .card {
+      border-radius: var(--radius);
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: linear-gradient(180deg, rgba(255, 255, 255, .09), rgba(255, 255, 255, .03));
+      backdrop-filter: blur(14px);
+      transition: .25s;
+      position: relative
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, .4)
+    }
+
+    .card.highlight {
+      outline: 3px solid #facc15;
+      box-shadow: 0 0 0 6px rgba(250, 204, 21, .25), 0 20px 50px rgba(0, 0, 0, .4)
+    }
+
+    .card.dim {
+      opacity: .35;
+      filter: grayscale(.4)
+    }
+
+    .card-top {
+      padding: 22px;
+      position: relative;
+      overflow: hidden
+    }
+
+    .s1 .card-top {
+      background: linear-gradient(135deg, rgba(99, 102, 241, .35), rgba(6, 182, 212, .2))
+    }
+
+    .s2 .card-top {
+      background: linear-gradient(135deg, rgba(16, 185, 129, .35), rgba(6, 182, 212, .2))
+    }
+
+    .s3 .card-top {
+      background: linear-gradient(135deg, rgba(245, 158, 11, .35), rgba(236, 72, 153, .25))
+    }
+
+    .avatar {
+      width: 62px;
+      height: 62px;
+      border-radius: 18px;
+      display: grid;
+      place-items: center;
+      font-size: 28px;
+      font-weight: 900;
+      background: rgba(0, 0, 0, .3);
+      border: 1px solid rgba(255, 255, 255, .2)
+    }
+
+    .card-top h2 {
+      margin: 12px 0 2px;
+      font-size: 22px
+    }
+
+    .role {
+      color: #e0e7ff;
+      font-size: 14px;
+      font-weight: 700
+    }
+
+    .name-edit {
+      margin-top: 8px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(0, 0, 0, .3);
+      border: 1px dashed rgba(255, 255, 255, .3);
+      border-radius: 10px;
+      padding: 6px 12px;
+      font-size: 14px
+    }
+
+    .name-edit [contenteditable] {
+      outline: 0;
+      min-width: 120px;
+      font-weight: 800;
+      color: #fff
+    }
+
+    .progress-wrap {
+      margin-top: 14px;
+      background: rgba(0, 0, 0, .35);
+      border-radius: 100px;
+      height: 12px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, .15)
+    }
+
+    .progress {
+      height: 100%;
+      width: 0%;
+      transition: .4s;
+      border-radius: 100px
+    }
+
+    .s1 .progress {
+      background: linear-gradient(90deg, #818cf8, #22d3ee)
+    }
+
+    .s2 .progress {
+      background: linear-gradient(90deg, #34d399, #22d3ee)
+    }
+
+    .s3 .progress {
+      background: linear-gradient(90deg, #fbbf24, #fb7185)
+    }
+
+    .ptxt {
+      font-size: 13px;
+      color: #e2e8f0;
+      margin-top: 6px
+    }
+
+    .card-body {
+      padding: 20px 22px
+    }
+
+    .sec-title {
+      font-weight: 800;
+      margin: 14px 0 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 15px
+    }
+
+    .sec-title i {
+      width: 30px;
+      height: 30px;
+      display: grid;
+      place-items: center;
+      border-radius: 9px;
+      background: rgba(255, 255, 255, .08);
+      border: 1px solid var(--border)
+    }
+
+    .task {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      background: rgba(0, 0, 0, .22);
+      border: 1px solid rgba(255, 255, 255, .08);
+      border-radius: 12px;
+      padding: 10px 12px;
+      margin-bottom: 8px;
+      transition: .2s
+    }
+
+    .task:hover {
+      border-color: rgba(255, 255, 255, .25)
+    }
+
+    .task input {
+      margin-top: 6px;
+      width: 18px;
+      height: 18px;
+      accent-color: #22d3ee;
+      cursor: pointer;
+      flex-shrink: 0
+    }
+
+    .task.done {
+      opacity: .6;
+      text-decoration: line-through
+    }
+
+    .task .t b {
+      display: block;
+      font-size: 14px
+    }
+
+    .task .t small {
+      color: var(--muted);
+      font-size: 12.5px
+    }
+
+    .code {
+      direction: ltr;
+      text-align: left;
+      font-family: ui-monospace, Consolas, monospace;
+      background: #020617;
+      border: 1px solid rgba(255, 255, 255, .1);
+      border-radius: 8px;
+      padding: 2px 8px;
+      font-size: 12px;
+      display: inline-block;
+      margin: 2px;
+      color: #7dd3fc
+    }
+
+    .dep-box {
+      border: 1px solid rgba(239, 68, 68, .5);
+      background: var(--dep-bg);
+      border-radius: 12px;
+      padding: 10px 12px;
+      font-size: 13px;
+      margin-bottom: 8px;
+      cursor: pointer
+    }
+
+    .dep-box:hover {
+      background: rgba(239, 68, 68, .25)
+    }
+
+    .dep-box b {
+      color: #fecaca
+    }
+
+    .dep-link {
+      color: #fde68a;
+      text-decoration: underline;
+      cursor: pointer;
+      font-weight: 800
+    }
+
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 8px
+    }
+
+    .tag {
+      font-size: 12px;
+      padding: 4px 10px;
+      border-radius: 100px;
+      background: rgba(255, 255, 255, .08);
+      border: 1px solid var(--border)
+    }
+
+    /* timeline */
+    .timeline {
+      margin-top: 28px;
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      padding: 26px;
+      background: rgba(255, 255, 255, .04)
+    }
+
+    .timeline h2,
+    .relations h2 {
+      font-size: 22px;
+      margin-bottom: 6px
+    }
+
+    .timeline p.sub,
+    .relations p.sub {
+      color: var(--muted);
+      font-size: 14px;
+      margin-bottom: 18px
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px
+    }
+
+    .step {
+      border-radius: 16px;
+      padding: 18px;
+      border: 1px solid var(--border);
+      background: rgba(0, 0, 0, .25);
+      position: relative
+    }
+
+    .step .n {
+      position: absolute;
+      top: -14px;
+      right: 16px;
+      background: linear-gradient(90deg, var(--p1), var(--p2));
+      font-weight: 900;
+      font-size: 13px;
+      padding: 2px 14px;
+      border-radius: 100px
+    }
+
+    .step h3 {
+      font-size: 16px;
+      margin: 6px 0
+    }
+
+    .step ul {
+      font-size: 13px;
+      color: #cbd5e1;
+      padding-right: 18px
+    }
+
+    /* relations */
+    .relations {
+      margin-top: 20px;
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      padding: 26px;
+      background: rgba(255, 255, 255, .04)
+    }
+
+    table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      font-size: 14px;
+      overflow: hidden;
+      border-radius: 14px;
+      border: 1px solid var(--border)
+    }
+
+    th {
+      background: rgba(99, 102, 241, .2);
+      padding: 12px;
+      font-size: 13px
+    }
+
+    td {
+      padding: 12px;
+      border-top: 1px solid var(--border);
+      vertical-align: top
+    }
+
+    tr:nth-child(even) td {
+      background: rgba(255, 255, 255, .02)
+    }
+
+    .flow {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      justify-content: center;
+      margin: 18px 0;
+      padding: 18px;
+      background: rgba(0, 0, 0, .25);
+      border-radius: 16px;
+      border: 1px dashed rgba(255, 255, 255, .2)
+    }
+
+    .fnode {
+      padding: 8px 18px;
+      border-radius: 100px;
+      font-weight: 800;
+      font-size: 14px;
+      border: 1px solid
+    }
+
+    .fn1 {
+      background: rgba(99, 102, 241, .2);
+      border-color: #818cf8
+    }
+
+    .fn2 {
+      background: rgba(16, 185, 129, .2);
+      border-color: #34d399
+    }
+
+    .fn3 {
+      background: rgba(245, 158, 11, .2);
+      border-color: #fbbf24
+    }
+
+    .arrow {
+      color: #facc15;
+      font-weight: 900
+    }
+
+    footer {
+      text-align: center;
+      color: var(--muted);
+      font-size: 13px;
+      margin: 26px 0 10px
+    }
+
+    @media print {
+      body {
+        background: #fff;
+        color: #000
+      }
+
+      .hero,
+      .card,
+      .timeline,
+      .relations {
+        box-shadow: none;
+        backdrop-filter: none
+      }
+
+      .toolbar,
+      .legend {
+        display: none
+      }
+    }
+  </style>
+  <style id="mono-theme">
+    /* ===== Monocolor DARK theme (stone grays) + one secondary accent (teal) ===== */
+    :root {
+      --bg: #1c1917; --bg2: #292524; --card: #292524;
+      --border: #44403c; --text: #fafaf9; --muted: #a8a29e;
+      --accent: #2dd4bf; --accent-deep: #5eead4; --accent-soft: rgba(45,212,191,.08);
+      --radius: 16px;
+      color-scheme: dark;
+    }
+    body { background: var(--bg) !important; color: var(--text) !important; }
+    .hero { background: #292524 !important; border: 1px solid var(--border) !important; box-shadow: 0 1px 3px rgba(0,0,0,.4) !important; backdrop-filter: none !important; }
+    .hero::before { display: none !important; }
+    .badge { background: #fafaf9 !important; border-color: #fafaf9 !important; color: #1c1917 !important; }
+    .badge i { color: #0f766e !important; } /* tiny secondary touch */
+    .hero h1 span { background: none !important; color: inherit !important; }
+    .hero h1 { color: #fafaf9 !important; }
+    .hero p { color: var(--muted) !important; }
+    .stat { background: #1c1917 !important; border: 1px solid var(--border) !important; }
+    .stat b { color: #fafaf9 !important; }
+    .stat span, .stat i { color: var(--muted) !important; }
+    .search { background: #292524 !important; border: 1px solid var(--border) !important; }
+    .search input { color: var(--text) !important; }
+    .search input::placeholder { color: #78716c !important; }
+    .search i { color: var(--muted) !important; }
+    button { background: #292524 !important; border: 1px solid #57534e !important; color: var(--text) !important; box-shadow: none !important; }
+    button:hover { background: #44403c !important; transform: none !important; }
+    button.active { background: #fafaf9 !important; color: #1c1917 !important; border-color: #fafaf9 !important; }
+    button.warn.active { background: #0f766e !important; border-color: #0f766e !important; color: #fff !important; }
+    .legend { color: var(--muted) !important; }
+    .pill { background: #292524 !important; border: 1px solid var(--border) !important; color: #d6d3d1 !important; }
+    .dep-pill { background: var(--accent-soft) !important; border: 1px dashed var(--accent) !important; color: var(--accent-deep) !important; }
+    .card { background: #292524 !important; border: 1px solid var(--border) !important; backdrop-filter: none !important; box-shadow: 0 1px 3px rgba(0,0,0,.4) !important; }
+    .card:hover { transform: translateY(-3px) !important; box-shadow: 0 8px 20px rgba(0,0,0,.5) !important; }
+    .card.highlight { outline: 2px solid var(--accent) !important; box-shadow: 0 0 0 4px rgba(45,212,191,.15) !important; }
+    .card.dim { opacity: .35 !important; filter: grayscale(1) !important; }
+    .s1 .card-top, .s2 .card-top, .s3 .card-top { background: #1c1917 !important; border-bottom: 1px solid var(--border) !important; }
+    .avatar { background: #fafaf9 !important; color: #1c1917 !important; border: 1px solid #fafaf9 !important; font-size: 22px !important; }
+    .card-top h2 { color: #fafaf9 !important; }
+    .role { color: var(--muted) !important; }
+    .name-edit { background: #1c1917 !important; border: 1px dashed #57534e !important; color: #d6d3d1 !important; }
+    .name-edit [contenteditable] { color: #fafaf9 !important; }
+    .progress-wrap { background: #1c1917 !important; border: 1px solid var(--border) !important; }
+    .s1 .progress, .s2 .progress, .s3 .progress { background: var(--accent) !important; }
+    .ptxt { color: var(--muted) !important; }
+    .sec-title { color: #fafaf9 !important; }
+    .sec-title i { background: #1c1917 !important; border: 1px solid var(--border) !important; color: #d6d3d1 !important; }
+    .task { background: #1c1917 !important; border: 1px solid var(--border) !important; }
+    .task:hover { border-color: #78716c !important; }
+    .task input { accent-color: var(--accent) !important; }
+    .task .t b { color: #fafaf9 !important; }
+    .task .t small { color: var(--muted) !important; }
+    .code { background: #1c1917 !important; border: 1px solid #57534e !important; color: #d6d3d1 !important; }
+    .dep-box { border: 1px dashed var(--accent) !important; background: var(--accent-soft) !important; color: #d6d3d1 !important; }
+    .dep-box:hover { background: rgba(45,212,191,.15) !important; }
+    .dep-box b { color: var(--accent-deep) !important; }
+    .dep-box .code { border-color: var(--accent) !important; color: var(--accent-deep) !important; }
+    .dep-link { color: var(--accent) !important; }
+    .meta .tag { background: #1c1917 !important; border: 1px solid var(--border) !important; color: #a8a29e !important; }
+    .timeline, .relations { background: #292524 !important; border: 1px solid var(--border) !important; }
+    .timeline p.sub, .relations p.sub { color: var(--muted) !important; }
+    .timeline h2, .relations h2 { color: #fafaf9 !important; }
+    .step { background: #1c1917 !important; border: 1px solid var(--border) !important; }
+    .step .n { background: #fafaf9 !important; color: #1c1917 !important; }
+    .step h3 { color: #fafaf9 !important; }
+    .step ul { color: #a8a29e !important; }
+    table { border: 1px solid var(--border) !important; }
+    th { background: #1c1917 !important; color: #fafaf9 !important; }
+    td { border-top: 1px solid var(--border) !important; color: #d6d3d1 !important; }
+    tr:nth-child(even) td { background: rgba(255,255,255,.02) !important; }
+    .flow { background: #1c1917 !important; border: 1px dashed #57534e !important; }
+    .fnode { border: 1px solid #78716c !important; color: #fafaf9 !important; }
+    .fn1, .fn2, .fn3 { background: #292524 !important; border-color: #78716c !important; }
+    .arrow { color: var(--accent) !important; }
+    footer { color: var(--muted) !important; }
+    div[style*="background:rgba(34,211,238"], div[style*="background:rgba(34, 211, 238"] { background: #1c1917 !important; border: 1px solid var(--border) !important; color: #d6d3d1 !important; }
+    /* ===== Team memory (pushed state via Git) ===== */
+    .pushed-line { font-size: 12.5px; color: #a8a29e; margin-top: 4px; }
+    .pushed-line b { color: #5eead4; }
+    .pushed-badge { display: inline-flex; align-items: center; gap: 4px; font-size: 11px; font-weight: 700; color: #5eead4; background: rgba(45,212,191,.08); border: 1px dashed #2dd4bf; border-radius: 100px; padding: 1px 9px; margin: 4px 4px 0 0; white-space: nowrap; }
+    .share-btn { margin-top: 10px; width: 100%; font-size: 13px; }
+    .share-btn i { color: #2dd4bf; }
+    .sync { margin-top: 20px; border: 1px solid #44403c; border-radius: 22px; padding: 26px; background: #292524; }
+    .sync h2 { font-size: 20px; color: #fafaf9; margin-bottom: 6px; }
+    .sync p, .sync li { font-size: 14px; color: #a8a29e; }
+    .sync ol { padding-right: 20px; margin-top: 8px; }
+    .sync b { color: #e7e5e4; }
+    .sync code { direction: ltr; display: inline-block; font-family: ui-monospace, Consolas, monospace; background: #1c1917; border: 1px solid #57534e; border-radius: 8px; padding: 1px 8px; font-size: 12.5px; color: #d6d3d1; }
+    #syncStatus { margin-top: 12px; font-size: 13px; color: #a8a29e; background: #1c1917; border: 1px solid #44403c; border-radius: 12px; padding: 10px 14px; }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+
+    <div class="hero">
+      <div class="badge"><i class="fa-solid fa-graduation-cap"></i> مشروع OOP النهائي — College Management System</div>
+      <h1>توزيع المهام على <span>3 طلاب</span> ⚡</h1>
+      <p>تقسيم عادل وشامل لكل الكلاسات (16 كلاس)، الصفات، الدوال، والعلاقات الخمس (وراثة، تجميع، تكوين، ارتباط، ارتباط
+        أحادي) مع إبراز الاعتماديات بين الطلاب لتجنب التعطيل.</p>
+      <div class="stats">
+        <div class="stat"><b>16</b><span><i class="fa-solid fa-cubes"></i> كلاس مطلوب</span></div>
+        <div class="stat"><b>5</b><span><i class="fa-solid fa-diagram-project"></i> أنواع علاقات</span></div>
+        <div class="stat"><b>~30</b><span><i class="fa-solid fa-gears"></i> دالة (Method)</span></div>
+        <div class="stat"><b>3</b><span><i class="fa-solid fa-users"></i> طلاب</span></div>
+        <div class="stat"><b>4</b><span><i class="fa-solid fa-list-check"></i> مراحل تسليم</span></div>
+      </div>
+    </div>
+
+    <div class="toolbar">
+      <div class="search"><i class="fa-solid fa-magnifying-glass"></i><input id="q"
+          placeholder="ابحث عن كلاس أو دالة... مثال: Library, Hostel, PayFees()"></div>
+      <div class="btns">
+        <button id="btnAll" class="active">عرض الكل</button>
+        <button id="btnDep" class="warn">🔗 إبراز الاعتماديات فقط</button>
+        <button onclick="window.print()"><i class="fa-solid fa-print"></i> طباعة / PDF</button>
+        <button id="btnConnect">📂 ربط ملف الذاكرة</button>
+<button id="btnSave">💾 حفظ في الملف</button>
+<button id="btnReset">↺ تصفير التقدم</button>
+      </div>
+    </div>
+
+    <div class="legend">
+      <span class="pill"><span class="dot" style="background:#fafaf9"></span> الطالب 1 — النواة والإدارة</span>
+      <span class="pill"><span class="dot" style="background:#a8a29e"></span> الطالب 2 — الأكاديمية</span>
+      <span class="pill"><span class="dot" style="background:#57534e;border:1px solid #a8a29e"></span> الطالب 3 — الخدمات والدمج</span>
+      <span class="pill dep-pill"><i class="fa-solid fa-link"></i> مهمة تعتمد على طالب آخر — مرّر أو اضغط للتحديد</span>
+      <span class="pill">✏️ اضغط على الاسم لتعديله باسمك الحقيقي (يُحفظ تلقائياً)</span>
+    </div>
+
+    <div class="flow">
+      <div class="fnode fn1" data-goto="c1">1️⃣ الطالب الأول: الأساس</div>
+      <span class="arrow">←←</span>
+      <div class="fnode fn2" data-goto="c2">2️⃣ الطالب الثاني: يعتمد على الأول</div>
+      <span class="arrow">←←</span>
+      <div class="fnode fn3" data-goto="c3">3️⃣ الطالب الثالث: يعتمد على الأول والثاني + الدمج النهائي</div>
+    </div>
+
+    <div class="grid" id="grid">
+
+      <!-- STUDENT 1 -->
+      <div class="card s1" id="c1" data-student="1">
+        <div class="card-top">
+          <div class="avatar">🧠</div>
+          <h2>الطالب الأول — مهندس النواة والإدارة</h2>
+          <div class="role">Core + Inheritance Foundation | يعمل أولاً ولا ينتظر أحداً ✅</div>
+          <div class="name-edit">👤 الاسم: <span contenteditable="true" id="n1">الطالب الأول</span></div>
+          <div class="progress-wrap">
+            <div class="progress" id="p1"></div>
+          </div>
+          <div class="ptxt" id="t1">التقدم: 0%</div>
+        </div>
+        <div class="card-body">
+          <div class="sec-title"><i class="fa-solid fa-cube"></i> الكلاسات المسؤول عنها (6)</div>
+          <div class="task" data-k="collegemanagement college department student ug pg open"><input type="checkbox">
+            <div class="t"><b><span class="code">CollegeManagement</span> + <span
+                  class="code">Department</span></b><small>الصفات: CollegeName, City, ContactNumber / DepartmentId,
+                DepartmentName, HODName, TotalStaffs, TotalStudents — الدوال: Open(), CollegeDetails(),
+                DepartmentDetails(), ShowEvents()</small></div>
+          </div>
+          <div class="task" data-k="student ugstudent pgstudent"><input type="checkbox">
+            <div class="t"><b><span class="code">Student</span> (أب) + <span class="code">UGStudent</span> + <span
+                  class="code">PGStudent</span> (أبناء)</b><small>الصفات: StudentId, StudentName, Gender, Year, ClassId
+                — الدوال: StudentDetails(), PayFees(), IsPresent()</small></div>
+          </div>
+          <div class="task" data-k="setup main package"><input type="checkbox">
+            <div class="t"><b>🛠️ إعداد المشروع + <span class="code">Main</span></b><small>إنشاء Java Project، التقسيم
+                إلى packages (core, academic, services)، وكلاس تجريبي، ورفعه على GitHub ومشاركة الـ Interfaces مع
+                الفريق</small></div>
+          </div>
+
+          <div class="sec-title"><i class="fa-solid fa-diagram-project"></i> العلاقات التي ينفذها</div>
+          <div class="task" data-k="inheritance composition"><input type="checkbox">
+            <div class="t"><b>وراثة Inheritance + تكوين Composition</b><small>وراثة: Student ← (UG, PG) — تكوين:
+                CollegeManagement ◆ (Department, Classroom, Auditorium) — يعرّف واجهات DepartmentId و ClassId التي
+                سيستخدمها الجميع</small></div>
+          </div>
+
+          <div class="sec-title"><i class="fa-solid fa-flag-checkered"></i> التسليمات</div>
+          <div class="meta"><span class="tag">📦 ملفات: CollegeManagement.java, Department.java, Student.java,
+              UGStudent.java, PGStudent.java</span><span class="tag">📄 توثيق الوراثة والتكوين</span></div>
+          <div class="sec-title"><i class="fa-solid fa-triangle-exclamation"></i> ملاحظة للفريق</div>
+          <div
+            style="font-size:13px;color:#cbd5e1;background:rgba(34,211,238,.1);border:1px solid rgba(34,211,238,.3);border-radius:12px;padding:10px">
+            يجب أن يُسلّم أولاً تعريف <span class="code">getDepartmentId() , getStudentId() , getClassId()</span> حتى لا
+            يتعطل الطالب 2 و 3. ⚡ أولوية قصوى.</div>
+        </div>
+      </div>
+
+      <!-- STUDENT 2 -->
+      <div class="card s2" id="c2" data-student="2">
+        <div class="card-top">
+          <div class="avatar">🏫</div>
+          <h2>الطالب الثاني — مهندس الطاقم الأكاديمي</h2>
+          <div class="role">Academic Facilities | يعتمد على الأول 🔗</div>
+          <div class="name-edit">👤 الاسم: <span contenteditable="true" id="n2">الطالب الثاني</span></div>
+          <div class="progress-wrap">
+            <div class="progress" id="p2"></div>
+          </div>
+          <div class="ptxt" id="t2">التقدم: 0%</div>
+        </div>
+        <div class="card-body">
+          <div class="sec-title"><i class="fa-solid fa-cube"></i> الكلاسات المسؤول عنها (5)</div>
+          <div class="task" data-k="staff teaching nonteaching"><input type="checkbox">
+            <div class="t"><b><span class="code">Staff</span> + <span class="code">TeachingStaff</span> + <span
+                  class="code">NonTeachingStaff</span></b><small>الصفات: StaffId, StaffName, DepartmentId, Salary —
+                الدالة: StaffDetails()</small></div>
+          </div>
+          <div class="task" data-k="classroom"><input type="checkbox">
+            <div class="t"><b><span class="code">Classroom</span></b><small>ClassId, Section, DepartmentId — الدوال:
+                ClassroomDetails(), IsOccupied()</small></div>
+          </div>
+          <div class="task" data-k="library search lend return fine"><input type="checkbox">
+            <div class="t"><b><span class="code">Library</span></b><small>LibraryId, LibrarianName, BookSection,
+                TotalBooks — الدوال: LibraryDetails(), SearchBooks(), LendBooks(), ReturnBooks(), PayFine()</small>
+            </div>
+          </div>
+          <div class="task" data-k="auditorium bookevents"><input type="checkbox">
+            <div class="t"><b><span class="code">Auditorium</span></b><small>AuditoriumName, EventsList, Date, Time,
+                TotalSeats, DepartmentId — الدالة: BookEvents()</small></div>
+          </div>
+
+          <div class="sec-title"><i class="fa-solid fa-link"></i> اعتماديات — انتبه! 🔴</div>
+          <div class="dep-box" data-dep="c1">⛔ <b>Staff + Classroom + Auditorium</b> تحتاج <span
+              class="code">DepartmentId</span> من الطالب الأول — <span class="dep-link" data-goto="c1">اضغط لرؤية بطاقة
+              الطالب الأول</span><br><small>لا تبدأ قبل استلام واجهة Department — تواصل مع زميلك.</small></div>
+          <div class="dep-box" data-dep="c1">⛔ <b>علاقات Student ↔ Staff و Student → (Classroom/Library/Auditorium)</b>
+            تحتاج <span class="code">Student</span> — <span class="dep-link" data-goto="c1">عرض الطالب الأول</span>
+          </div>
+
+          <div class="sec-title"><i class="fa-solid fa-diagram-project"></i> العلاقات</div>
+          <div class="task" data-k="inheritance association unidirectional"><input type="checkbox">
+            <div class="t"><b>وراثة Staff + ارتباط Association + ارتباط أحادي</b><small>وراثة Staff ← (Teaching,
+                NonTeaching) — ارتباط: Student — Staff — أحادي: Student → Classroom/Library/Auditorium + Teachers →
+                Library</small></div>
+          </div>
+          <div class="meta"><span class="tag">📦 Staff.java, Classroom.java, Library.java, Auditorium.java +
+              الورثة</span></div>
+        </div>
+      </div>
+
+      <!-- STUDENT 3 -->
+      <div class="card s3" id="c3" data-student="3">
+        <div class="card-top">
+          <div class="avatar">🚌</div>
+          <h2>الطالب الثالث — مهندس الخدمات والدمج</h2>
+          <div class="role">Campus Services + Final Integration | يعتمد على 1 و 2 🔗🔗</div>
+          <div class="name-edit">👤 الاسم: <span contenteditable="true" id="n3">الطالب الثالث</span></div>
+          <div class="progress-wrap">
+            <div class="progress" id="p3"></div>
+          </div>
+          <div class="ptxt" id="t3">التقدم: 0%</div>
+        </div>
+        <div class="card-body">
+          <div class="sec-title"><i class="fa-solid fa-cube"></i> الكلاسات المسؤول عنها (5)</div>
+          <div class="task" data-k="canteen cafeteria showitems buy"><input type="checkbox">
+            <div class="t"><b><span class="code">Cafeteria / Canteen</span></b><small>InchargeId, ItemsList,
+                AvailableList — الدوال: ShowItems(), Buy()</small></div>
+          </div>
+          <div class="task" data-k="bus driver seats"><input type="checkbox">
+            <div class="t"><b><span class="code">Bus</span></b><small>BusId, BusNumber, DriverName, Destination,
+                TotalSeats — الدوال: BusDetails(), SeatsAvailability()</small></div>
+          </div>
+          <div class="task" data-k="hostel boys girls checkin checkout"><input type="checkbox">
+            <div class="t"><b><span class="code">Hostel</span> + <span class="code">BoysHostel</span> + <span
+                  class="code">GirlsHostel</span></b><small>StudentId, BlockNumber, RoomNumber — الدوال:
+                HostelDetails(), CheckIn(), CheckOut()</small></div>
+          </div>
+          <div class="task" data-k="parking parkvehicle"><input type="checkbox">
+            <div class="t"><b><span class="code">Parking</span></b><small>SlotId, VehicleNumber, VehicleOwnerName —
+                الدالة: ParkVehicle()</small></div>
+          </div>
+
+          <div class="sec-title"><i class="fa-solid fa-link"></i> اعتماديات — انتبه! 🔴🔴</div>
+          <div class="dep-box" data-dep="c1">⛔ <b>Hostel</b> يحتاج <span class="code">StudentId</span> من الطالب الأول —
+            <span class="dep-link" data-goto="c1">عرض الطالب الأول</span></div>
+          <div class="dep-box" data-dep="c1 c2">⛔ <b>Parking</b> يخدم طلاباً وموظفين (VehicleOwnerName) فيعتمد على الأول
+            والثاني — <span class="dep-link" data-goto="c2">عرض الطالب الثاني</span></div>
+          <div class="dep-box" data-dep="c1 c2">⛔ <b>علاقات Student → Bus/Canteen + تجميع College ◇ Hostel/Parking</b>
+            تعتمد على <span class="code">CollegeManagement</span> و <span class="code">Student</span> — تنسيق مشترك
+          </div>
+
+          <div class="sec-title"><i class="fa-solid fa-rocket"></i> مهمة إضافية حصرية: الدمج النهائي</div>
+          <div class="task" data-k="uml integration main test readme"><input type="checkbox">
+            <div class="t"><b>🎯 تجميع UML الكامل + اختبار التكامل + README</b><small>دمج كل الكلاسات في مخطط واحد مطابق
+                لصفحة الملف، كتابة Main شامل يجرّب كل الدوال، وتجهيز العرض النهائي — <b style="color:#2dd4bf">لا تبدأ
+                  إلا بعد انتهاء الطالب 1 و 2</b></small></div>
+          </div>
+          <div class="meta"><span class="tag">📦 Bus.java, Hostel.java, Parking.java, Canteen.java</span><span
+              class="tag">📊 UML + Demo</span></div>
+        </div>
+      </div>
+
+    </div><!-- grid -->
+
+    <div class="timeline">
+      <h2>🗓️ خطة العمل المقترحة (4 مراحل)</h2>
+      <p class="sub">اتبعوا هذا الترتيب لتقليل الانتظار بسبب الاعتماديات — المرحلة 1 يجب أن تنتهي أولاً.</p>
+      <div class="steps">
+        <div class="step">
+          <div class="n">المرحلة 1 — يوم 1-2</div>
+          <h3>🧠 الأساس (الطالب 1)</h3>
+          <ul>
+            <li>إنشاء Repo وتثبيت الهيكل</li>
+            <li>CollegeManagement + Department</li>
+            <li>Student + UG + PG</li>
+            <li>نشر الـ Interfaces للفريق</li>
+          </ul>
+        </div>
+        <div class="step">
+          <div class="n">المرحلة 2 — يوم 3-4</div>
+          <h3>🏫 الأكاديمية (الطالب 2) + 🚌 الخدمات (الطالب 3)</h3>
+          <ul>
+            <li>الطالب 2: Staff + Classroom + Library</li>
+            <li>الطالب 3: Bus + Parking + Canteen</li>
+            <li>العمل بالتوازي بعد استلام واجهات المرحلة 1</li>
+          </ul>
+        </div>
+        <div class="step">
+          <div class="n">المرحلة 3 — يوم 5</div>
+          <h3>🔗 العلاقات</h3>
+          <ul>
+            <li>كل طالب يضبط علاقاته (وراثة/تكوين/تجميع/ارتباط)</li>
+            <li>مراجعة DepartmentId و StudentId و ClassId</li>
+            <li>اختبار كل وحدة منفصلة</li>
+          </ul>
+        </div>
+        <div class="step">
+          <div class="n">المرحلة 4 — يوم 6</div>
+          <h3>🚀 الدمج (الطالب 3 + الجميع)</h3>
+          <ul>
+            <li>دمج كل الفروع Merge</li>
+            <li>رسم UML النهائي ومطابقته مع الملف</li>
+            <li>تجربة Main شاملة + تجهيز العرض</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="relations">
+      <h2>📚 ملخص العلاقات المطلوبة من الملف</h2>
+      <p class="sub">موزعة على الطلاب — كل علاقة مكتوب بجانبها المسؤول عنها.</p>
+      <table>
+        <tr>
+          <th>النوع</th>
+          <th>العلاقة</th>
+          <th>المسؤول</th>
+        </tr>
+        <tr>
+          <td>🧬 وراثة Is-A</td>
+          <td><span class="code">UGStudent, PGStudent → Student</span></td>
+          <td>الطالب 1</td>
+        </tr>
+        <tr>
+          <td>🧬 وراثة Is-A</td>
+          <td><span class="code">TeachingStaff, NonTeachingStaff → Staff</span></td>
+          <td>الطالب 2 🔗 يعتمد على DepartmentId من 1</td>
+        </tr>
+        <tr>
+          <td>🧬 وراثة Is-A</td>
+          <td><span class="code">BoysHostel, GirlsHostel → Hostel</span></td>
+          <td>الطالب 3</td>
+        </tr>
+        <tr>
+          <td>◇ تجميع Aggregation</td>
+          <td><span class="code">CollegeManagement ◇ Hostel , Parking</span></td>
+          <td>الطالب 3 🔗 يعتمد على 1</td>
+        </tr>
+        <tr>
+          <td>◆ تكوين Composition</td>
+          <td><span class="code">CollegeManagement ◆ Department , Classroom , Auditorium</span></td>
+          <td>الطالب 1 + 2 (تنسيق مشترك 🔗)</td>
+        </tr>
+        <tr>
+          <td>— ارتباط Association</td>
+          <td><span class="code">Student — Staff</span></td>
+          <td>الطالب 2 🔗 يعتمد على 1</td>
+        </tr>
+        <tr>
+          <td>→ ارتباط أحادي</td>
+          <td><span class="code">Student → Classroom, Library, Bus, Auditorium, Canteen + Teachers → Library</span></td>
+          <td>الطالب 2 + 3 🔗 يعتمدان على 1</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="sync" id="syncSec">
+      <h2>☁️ ذاكرة الفريق — ملف واحد فقط</h2>
+      <p>ملف واحد مشترك: <code>task-assignment/progress.json</code> — والموقع نفسه يعيد كتابته تلقائياً. الخطوات:</p>
+      <ol>
+        <li>اضغط <b>«📂 ربط ملف الذاكرة»</b> بالأعلى واختر ملف <code>progress.json</code> من مجلد الموقع (مرة واحدة فقط).</li>
+        <li>علّم على مهامك — الموقع <b>يعيد كتابة الملف تلقائياً</b> بعد كل تعليم.</li>
+        <li>نفّذ: <code>git add task-assignment/progress.json</code> ثم <code>git commit -m "progress"</code> ثم <code>git push</code>.</li>
+        <li>زملاؤك ينفّذون <code>git pull</code> ويحدّثون الصفحة — فيرون شارات <b>✓ ١ / ٢ / ٣</b> على كل مهمة منجزة، وسطر «المدفوع» في كل بطاقة.</li>
+      </ol>
+      <p>متصفحك لا يدعم الربط المباشر؟ اضغط <b>«💾 حفظ في الملف»</b> لتنزيل نسخة محدثة من <code>progress.json</code>، ضعها مكان الملف القديم، ثم <code>push</code>.</p>
+      <div id="syncStatus">⏳ جارٍ تحميل ملف الذاكرة...</div>
+    </div>
+
+    <footer>صُمم لتوزيع عادل لمشروع OOP — نظام إدارة الكلية • بالتوفيق للفريق 🎓 • تُحفظ الأسماء والتقدم في المتصفح
+      تلقائياً</footer>
+  </div>
+
+  <script>
+    const $ = s => document.querySelector(s), $$ = s => document.querySelectorAll(s);
+    // names + checks persistence
+    ['n1', 'n2', 'n3'].forEach(id => { const el = document.getElementById(id); el.textContent = localStorage.getItem(id) || el.textContent; el.addEventListener('input', () => localStorage.setItem(id, el.textContent)) });
+    function updateProgress() {
+      [1, 2, 3].forEach(i => { const card = document.getElementById('c' + i); const boxes = card.querySelectorAll('input[type=checkbox]'); const done = [...boxes].filter(b => b.checked).length; const pct = boxes.length ? Math.round(done / boxes.length * 100) : 0; document.getElementById('p' + i).style.width = pct + '%'; document.getElementById('t' + i).textContent = `التقدم: ${pct}% (${done}/${boxes.length})`; localStorage.setItem('p' + i + '_' + boxes.length, done) });
+      const all = $$('#grid input[type=checkbox]'); const d = [...all].filter(b => b.checked).length; document.title = `(${Math.round(d / all.length * 100)}%) توزيع مهام OOP`;
+    }
+    $$('#grid input[type=checkbox]').forEach((b, idx) => { b.checked = localStorage.getItem('chk' + idx) === '1'; b.addEventListener('change', () => { localStorage.setItem('chk' + idx, b.checked ? '1' : '0'); b.closest('.task').classList.toggle('done', b.checked); updateProgress() }); b.closest('.task').classList.toggle('done', b.checked) });
+    updateProgress();
+    document.getElementById('btnReset').onclick = () => { if (confirm('تصفير كل التقدم والأسماء؟')) { localStorage.clear(); location.reload() } };
+    // search
+    document.getElementById('q').addEventListener('input', e => { const v = e.target.value.trim().toLowerCase(); $$('.task').forEach(t => { t.style.display = (!v || (t.dataset.k + t.textContent).toLowerCase().includes(v)) ? '' : 'none' }) });
+    // dep highlight mode
+    let depMode = false;
+    document.getElementById('btnDep').onclick = function () { depMode = !depMode; this.classList.toggle('active', depMode); $$('.card').forEach(c => c.classList.remove('dim', 'highlight')); if (depMode) { $$('.dep-box').forEach(d => { d.style.outline = '2px solid #2dd4bf'; d.style.background = 'rgba(45,212,191,.15)' }); document.getElementById('c1').classList.add('highlight') } else { $$('.dep-box').forEach(d => { d.style.outline = ''; d.style.background = '' }) } };
+    document.getElementById('btnAll').onclick = function () { depMode = false; document.getElementById('btnDep').classList.remove('active'); $$('.card').forEach(c => c.classList.remove('dim', 'highlight')); $$('.dep-box').forEach(d => { d.style.outline = ''; d.style.background = '' }) };
+    // goto + dep click highlight
+    $$('[data-goto]').forEach(el => el.addEventListener('click', e => { e.stopPropagation(); const id = el.dataset.goto; $$('.card').forEach(c => c.classList.remove('highlight')); const t = document.getElementById(id); t.scrollIntoView({ behavior: 'smooth', block: 'center' }); t.classList.add('highlight'); setTimeout(() => t.classList.remove('highlight'), 2200) }));
+    $$('.dep-box').forEach(b => b.addEventListener('click', () => { const targets = (b.dataset.dep || '').split(' '); $$('.card').forEach(c => c.classList.add('dim')); targets.forEach(id => document.getElementById(id)?.classList.remove('dim')); b.closest('.card').classList.remove('dim'); b.closest('.card').classList.add('highlight'); setTimeout(() => $$('.card').forEach(c => c.classList.remove('dim', 'highlight')), 2500) }));
+  </script>
+  <script>
+    // ===== Team memory: ONE file (progress.json), rewritten by the site itself =====
+    (function () {
+      const FILE = 'progress.json';
+      const N = [1, 2, 3], tids = {};
+      let mem = null, fileHandle = null, saveTimer = null, dirty = false;
+      N.forEach(n => {
+        const card = document.getElementById('c' + n);
+        card.querySelectorAll('.task').forEach((t, i) => {
+          const id = `s${n}-t${i}`;
+          t.dataset.tid = id; tids[id] = t;
+          t.querySelector('input[type=checkbox]').dataset.tid = id;
+        });
+        const pl = document.createElement('div');
+        pl.className = 'pushed-line'; pl.id = 'pt' + n;
+        pl.textContent = '☁️ المدفوع: جارٍ التحميل...';
+        card.querySelector('.card-top').appendChild(pl);
+      });
+      function nameOf(n) { return (document.getElementById('n' + n).textContent || '').trim(); }
+      function collectLocal() {
+        const o = { updatedAt: new Date().toISOString(), students: {} };
+        N.forEach(n => {
+          o.students[n] = {
+            name: nameOf(n), updatedAt: new Date().toISOString(),
+            checked: [...document.querySelectorAll(`#c${n} .task input[type=checkbox]:checked`)].map(b => b.dataset.tid)
+          };
+        });
+        return o;
+      }
+      function render() {
+        if (!mem) return;
+        $$('.pushed-badge').forEach(b => b.remove());
+        N.forEach(n => {
+          const s = (mem.students && mem.students[n]) || { checked: [] };
+          const set = new Set(s.checked || []);
+          set.forEach(id => {
+            const t = tids[id];
+            if (!t || t.querySelector(`.pushed-badge[data-s="${n}"]`)) return;
+            const b = document.createElement('span');
+            b.className = 'pushed-badge'; b.dataset.s = n;
+            b.title = `أنجزها ${s.name || ('الطالب ' + n)}${s.updatedAt ? ' • ' + new Date(s.updatedAt).toLocaleString('ar') : ''}`;
+            b.textContent = `✓ ${n}`;
+            t.querySelector('.t').appendChild(b);
+          });
+          const total = document.querySelectorAll(`#c${n} .task`).length;
+          const pct = total ? Math.round(set.size / total * 100) : 0;
+          document.getElementById('pt' + n).innerHTML =
+            `☁️ المدفوع: <b>${pct}% (${set.size}/${total})</b> — ${s.name || ''}${s.updatedAt ? `<span> • ${new Date(s.updatedAt).toLocaleString('ar')}</span>` : ''}`;
+        });
+      }
+      async function writeFile(obj) {
+        const txt = JSON.stringify(obj, null, 2);
+        if (fileHandle) {
+          const w = await fileHandle.createWritable();
+          await w.write(txt); await w.close();
+        } else {
+          const a = document.createElement('a');
+          a.href = URL.createObjectURL(new Blob([txt], { type: 'application/json' }));
+          a.download = FILE; document.body.appendChild(a); a.click(); a.remove();
+          setTimeout(() => URL.revokeObjectURL(a.href), 2000);
+        }
+        mem = obj; dirty = false; render(); flashSave(false);
+      }
+      function scheduleSave() {
+        dirty = true; flashSave(true);
+        if (!fileHandle) return; // no direct handle: wait for manual 💾 save
+        clearTimeout(saveTimer);
+        saveTimer = setTimeout(() => writeFile(collectLocal()), 800);
+      }
+      function flashSave(on) {
+        const b = document.getElementById('btnSave');
+        if (b) b.classList.toggle('active', !!on);
+      }
+      document.getElementById('grid').addEventListener('change', e => {
+        if (e.target.matches('input[type=checkbox]')) scheduleSave();
+      });
+      ['n1', 'n2', 'n3'].forEach(id => document.getElementById(id).addEventListener('input', scheduleSave));
+      async function connect() {
+        if (!window.showOpenFilePicker) {
+          alert('متصفحك لا يدعم الربط المباشر — استخدم زر «💾 حفظ في الملف» لتنزيل progress.json ثم ضعه مكان الملف القديم.');
+          return;
+        }
+        try {
+          const [h] = await window.showOpenFilePicker({
+            multiple: false,
+            types: [{ description: 'Progress JSON', accept: { 'application/json': ['.json'] } }]
+          });
+          fileHandle = h;
+          const obj = JSON.parse(await (await h.getFile()).text());
+          if (!obj.students) throw 0;
+          mem = obj; render();
+          document.getElementById('syncStatus').innerHTML =
+            `✅ مربوط بالملف: <b>${h.name}</b> — أي تعليم سيُعاد كتابته فيه تلقائياً. بعدها <code>git add/commit/push</code> لهذا الملف فقط.`;
+          if (dirty) writeFile(collectLocal());
+        } catch (e) { /* user cancelled */ }
+      }
+      async function boot() {
+        document.getElementById('btnConnect').onclick = connect;
+        document.getElementById('btnSave').onclick = () => writeFile(collectLocal());
+        try {
+          const r = await fetch(FILE, { cache: 'no-store' });
+          if (!r.ok) throw 0;
+          mem = await r.json(); render();
+          document.getElementById('syncStatus').innerHTML =
+            `✅ محمّل من <code>${FILE}</code> — علّم على مهامك ثم اربط الملف أو احفظ فيه لتُرى علاماتك بعد الـ <code>push</code>.`;
+        } catch (e) {
+          N.forEach(n => document.getElementById('pt' + n).textContent = '☁️ المدفوع: اربط ملف progress.json أو احفظ فيه لبدء المشاركة');
+          document.getElementById('syncStatus').innerHTML =
+            `⚠️ لم يُعثر على <code>${FILE}</code> — افتح الموقع عبر سيرفر محلي: <code>python3 -m http.server</code> ثم <code>localhost:8000/task-assignment/</code>`;
+        }
+      }
+      boot();
+    })();
+  </script>
+</body>
+
+</html>
