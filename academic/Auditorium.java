@@ -20,28 +20,13 @@ public class Auditorium {
         this.EventsList = new ArrayList<>();
     }
 
-    public void AuditoriumDetails() {
-        System.out.println("Auditorium: " + AuditoriumName);
-        System.out.println("Department ID: " + DepartmentId);
-        System.out.println("Total Seats: " + TotalSeats);
-        System.out.println("Date: " + Date + " | Time: " + Time);
-    }
-
     public void BookEvents(String eventName) {
         EventsList.add(eventName);
         System.out.println("Event '" + eventName + "' booked in " + AuditoriumName);
-        System.out.println("Department: " + DepartmentId + " | Available Seats: " + TotalSeats);
+        System.out.println("Date: " + Date + " | Time: " + Time);
     }
 
     public void showAllEvents() {
         System.out.println("Events in " + AuditoriumName + ": " + EventsList);
-    }
-
-    public int getTotalSeats() {
-        return TotalSeats;
-    }
-
-    public String getDepartmentId() {
-        return DepartmentId;
     }
 }

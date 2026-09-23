@@ -1,5 +1,8 @@
 package services;
 
+import academic.Student;
+import academic.Staff;
+
 public class Parking {
 
     int slotid;
@@ -13,9 +16,24 @@ public class Parking {
     }
 
     public void ParkVehicle() {
-        System.out.println("vehicle number: " + vehiclenumber);
-        System.out.println("owner name: " + vehicleownername);
-        System.out.println("slot id: " + slotid);
-        System.out.println("vehicle parked");
+        System.out.println("Vehicle Number: " + vehiclenumber);
+        System.out.println("Owner Name: " + vehicleownername);
+        System.out.println("Slot Id: " + slotid);
+        System.out.println("Vehicle parked");
+    }
+
+    public void ParkVehicle(Student student) {
+        System.out.println("Student ID: " + student.getStudentId());
+        System.out.println("Vehicle Number: " + vehiclenumber);
+        System.out.println("Slot Id: " + slotid);
+        System.out.println("Vehicle parked");
+    }
+
+    public void ParkVehicle(Staff staff) {
+        System.out.println("Staff ID: " + staff.getStaffId());
+        System.out.println("Owner Name: " + staff.getStaffName());
+        System.out.println("Vehicle Number: " + vehiclenumber);
+        System.out.println("Slot Id: " + slotid);
+        System.out.println("Vehicle parked");
     }
 }
