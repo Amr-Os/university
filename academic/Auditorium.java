@@ -17,16 +17,31 @@ public class Auditorium {
         this.Time = time;
         this.TotalSeats = totalSeats;
         this.DepartmentId = departmentId;
-        this.EventsList = new ArrayList<>();ذذ
+        this.EventsList = new ArrayList<>();
+    }
+
+    public void AuditoriumDetails() {
+        System.out.println("Auditorium: " + AuditoriumName);
+        System.out.println("Department ID: " + DepartmentId);
+        System.out.println("Total Seats: " + TotalSeats);
+        System.out.println("Date: " + Date + " | Time: " + Time);
     }
 
     public void BookEvents(String eventName) {
         EventsList.add(eventName);
         System.out.println("Event '" + eventName + "' booked in " + AuditoriumName);
-        System.out.println("Date: " + Date + " | Time: " + Time);
+        System.out.println("Department: " + DepartmentId + " | Available Seats: " + TotalSeats);
     }
 
     public void showAllEvents() {
         System.out.println("Events in " + AuditoriumName + ": " + EventsList);
+    }
+
+    public int getTotalSeats() {
+        return TotalSeats;
+    }
+
+    public String getDepartmentId() {
+        return DepartmentId;
     }
 }
